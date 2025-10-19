@@ -1,0 +1,122 @@
+
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+
+
+ul {
+   list-style: none;
+   gap: 1rem;
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   border: 2px solid black; /* crea el cuadro alrededor */
+   border-radius: 8px;      /* bordes redondeados (opcional) */
+   padding: 1rem 2rem;
+   background-color: #282c34;
+   color: white;
+}
+li a {
+ 
+  text-decoration: none;
+  color: white;
+}
+
+li a:hover  {
+  color: #61dafb;
+  transform:  translateY(-2px);
+
+}
+
+/* ====== Productios ====== */
+
+#listaProductos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  
+  padding: 2rem;
+  background-color:cadetblue
+}
+#liProducto {
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: rgb(92, 102, 102);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+#liProducto:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+#btproducto {
+  background-color: #007bff; /* color de fondo */
+  color: white;              /* color del texto */
+  border: none;              /* sin borde */
+  padding: 10px 20px;        /* espacio interno */
+  border-radius: 8px;        /* bordes redondeados */
+  cursor: pointer;           /* cambia el cursor al pasar por encima */
+  font-size: 16px;           /* tamaño del texto */
+  transition: background-color 0.3s ease; /* animación suave */
+  margin: 10px;
+}
+#btproducto:hover {
+  background-color: #21a1f1;
+}
+#btEliminar {
+  background-color: #e80f0f; /* color de fondo */
+  color: white;              /* color del texto */
+  border: none;              /* sin borde */
+  padding: 10px 20px;        /* espacio interno */
+  border-radius: 8px;        /* bordes redondeados */
+  cursor: pointer;           /* cambia el cursor al pasar por encima */
+  font-size: 16px;           /* tamaño del texto */
+  transition: background-color 0.3s ease; /* animación suave */
+  margin: 10px;
+}
+#btEliminar:hover {
+  background-color: #f19021;
+}
+
+#btVaciar {
+  background-color: #e80f0f; /* color de fondo */
+  color: white;              /* color del texto */
+  border: none;              /* sin borde */
+  padding: 10px 20px;        /* espacio interno */
+  border-radius: 8px;        /* bordes redondeados */
+  cursor: pointer;           /* cambia el cursor al pasar por encima */
+  font-size: 16px;           /* tamaño del texto */
+  transition: background-color 0.3s ease; /* animación suave */
+  margin: 10px;
+}
+#btVaciar:hover {
+  background-color: #f18221;
+}
+
+#Eliminar {
+  color: red;
+  cursor: pointer;
+  margin-left: 10px;
+}
+#Eliminar:hover {
+  text-decoration: underline;
+}
+#Compras {
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#encabezado {
+  background-color: rgb(212, 221, 245);
+  font-family: "Fugaz One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
