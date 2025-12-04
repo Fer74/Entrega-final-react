@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
-import CarritoCompras from '../Paginas/carrito.jsx';
+import { CarritoContext } from '../Context/CarritoContext';
 
 function Productos() { 
     const [productos, setProductos] = useState([]); 
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
-    const [Carrito, setCarrito] = useState([]);
+    
+    // Obtener la función agregarproductos del contexto
+    const { agregarproductos } = useContext(CarritoContext);
  
     useEffect(() => { 
         fetch('https://fakestoreapi.com/products') 
@@ -23,36 +25,31 @@ function Productos() {
             });
     }, []); 
 
-    const agregarproductos = (producto) => {
-        setCarrito([...Carrito, producto]);
-        alert(`Producto ${producto.title} agregado al carrito`);
-     }
-
-     if (cargando) return 'Cargando productos...';
-     if (error) return error;
+    if (cargando) return 'Cargando productos...';
+    if (error) return error;
     
-
- 
     return ( 
         <>
-        <ul id = "listaProductos"> 
-             {productos.map(producto =>(
-                <li id = "liProducto" key={producto.id}>                    
-                    <img src={producto.image} alt={producto.title} style={ { width: "100px", height: "100px" } } /> 
+        <ul id="listaProductos"> 
+             {productos.map(producto => (
+                <li id="liProducto" key={producto.id}>                    
+                    <img src={producto.image} alt={producto.title} style={{ width: "100px", height: "100px" }} /> 
                     <br />
                     Producto: {producto.title}
                     <br />
                     Precio: $ {producto.price}  
                     <br />
-                      <button id="btproducto" onClick={() => agregarproductos(producto)}>Agregar</button>
-                                           
-                      <button id="btproducto"> <Link to={`/Productos/${producto.id}`} >Detalles</Link></button>
-
+                    <button id="btproducto" onClick={() => agregarproductos(producto)}>
+                        Agregar
+                    </button>
+                    <button id="btproducto">
+                        <Link to={`/Productos/${producto.id}`}>Detalles</Link>
+                    </button>
                 </li>
             ))}  
         </ul> 
-          <CarritoCompras carrito={Carrito} setCarrito={setCarrito} />
         </>
-); 
+    ); 
 } 
-export default Productos; 
+
+export default Productos;

@@ -1,15 +1,10 @@
-import React from 'react';
+import React, { useContext } from "react";
+import { CarritoContext } from "../context/CarritoContext";
 
-export default function CarritoCompras({ carrito, setCarrito }) {
-  const vaciarCarrito = () => {
-    setCarrito([]);
-  };
-
-  const total = carrito.reduce((sum, item) => sum + Number(item.price), 0);
+export default function CarritoCompras() {
+  const { carrito, vaciarCarrito, eliminarProducto, incrementarCantidad, decrementarCantidad } = useContext(CarritoContext);
   
- const eliminarProducto = (id) => {
-    setCarrito((prev) => prev.filter((item) => item.id !== id));
-  };
+  const total = carrito.reduce((sum, item) => sum + (Number(item.price) * item.cantidad), 0);
  
   return (
     <div>
@@ -19,24 +14,58 @@ export default function CarritoCompras({ carrito, setCarrito }) {
         <p>El carrito está vacío</p>
       ) : (
         <>
-          {carrito.map((item) => (
-            <div id="Compras" key={item.id}>
-                {item.title} - ${Number(item.price).toFixed(3)} <a id="Eliminar" href = "#" onClick={() => eliminarProducto(item.id)}>Eliminar</a>
-               
+          {carrito.map((item, index) => (
+            <div id="Compras" key={`${item.id}-${index}`} style={{ marginBottom: '15px', padding: '10px', border: '1px solid #ddd' }}>
+              <div>{item.title}</div>
+              <div>Precio unitario: ${Number(item.price).toFixed(2)}</div>
+              
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '10px 0' }}>
+                <button 
+                  onClick={() => decrementarCantidad(item.id)}
+                  style={{ padding: '5px 10px', cursor: 'pointer' }}
+                  disabled={item.cantidad <= 1}
+                >
+                  -
+                </button>
+                
+                <span>Cantidad: {item.cantidad}</span>
+                
+                <button 
+                  onClick={() => incrementarCantidad(item.id)}
+                  style={{ padding: '5px 10px', cursor: 'pointer' }}
+                >
+                  +
+                </button>
+              </div>
+              
+              <div style={{ fontWeight: 'bold' }}>
+                Subtotal: ${(Number(item.price) * item.cantidad).toFixed(2)}
+              </div>
+              
+              <button 
+                id="Eliminar" 
+                onClick={() => eliminarProducto(item.id)}
+                style={{ marginTop: '10px', cursor: 'pointer', backgroundColor: '#ff4444', color: 'white', padding: '5px 15px', border: 'none' }}
+              >
+                Eliminar
+              </button>
             </div>
           ))}
 
-          <div>
+          <div style={{ marginTop: '20px', fontSize: '20px', fontWeight: 'bold' }}>
             <hr />
-            Total: ${Number(total).toFixed(3)}
+            Total: ${Number(total).toFixed(2)}
           </div>
 
-          <button id="btVaciar" onClick={vaciarCarrito}>
+          <button 
+            id="btVaciar" 
+            onClick={vaciarCarrito}
+            style={{ marginTop: '15px', padding: '10px 20px', cursor: 'pointer' }}
+          >
             Vaciar Carrito
           </button>
         </>
       )}
-    
     </div>
   );
 }
