@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import BagIcon from '../assets/BagIcon';
-import { CarritoContext } from "../context/CarritoContext";
+import { CarritoContext } from "../Context/CarritoContext";
 import { useAuthContext } from "../Context/AuthContext";
 import { useContext } from "react";
 

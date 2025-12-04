@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import CarritoCompras from './carrito.jsx';
 import { Container, Button, Modal } from 'react-bootstrap';
-import { CarritoContext } from '../context/CarritoContext';
+import { CarritoContext } from '../Context/CarritoContext';
 import { useAuthContext } from '../Context/AuthContext';
 
 function Compras() {
