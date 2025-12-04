@@ -51,7 +51,12 @@ export const ProductosProvider = ({ children }) => {
       const nuevoProducto = await respuesta.json();
       console.log("Producto agregado: ", nuevoProducto);
       
-      setProductos([...productos, nuevoProducto]);
+      // Usar función actualizada para acceder al estado correcto
+      setProductos(prevProductos => {
+        const actualizado = [...prevProductos, nuevoProducto];
+        console.log("Estado de productos actualizado:", actualizado);
+        return actualizado;
+      });
       alert('Producto agregado correctamente');
 
     } catch (error) {
@@ -75,10 +80,12 @@ export const ProductosProvider = ({ children }) => {
 
       const productoActualizado = await respuesta.json();
       
-      // Actualizar en el estado local
-      setProductos(productos.map(p => 
-        p.id === productoActualizado.id ? productoActualizado : p
-      ));
+      // Usar función actualizada
+      setProductos(prevProductos =>
+        prevProductos.map(p => 
+          p.id === productoActualizado.id ? productoActualizado : p
+        )
+      );
       
       alert('Producto actualizado correctamente');
 
@@ -99,7 +106,8 @@ export const ProductosProvider = ({ children }) => {
       if (!respuesta.ok) 
         throw new Error("Error al eliminar");  
 
-      setProductos(productos.filter(p => p.id !== id));
+      // Usar función actualizada
+      setProductos(prevProductos => prevProductos.filter(p => p.id !== id));
       alert('Producto eliminado correctamente');
       
     } catch (error) {

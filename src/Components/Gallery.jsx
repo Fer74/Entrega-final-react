@@ -1,54 +1,44 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 import { CarritoContext } from '../Context/CarritoContext';
+import { useProductosContext } from '../Context/ProductosContext';
 
 function Productos() { 
-    const [productos, setProductos] = useState([]); 
-    const [cargando, setCargando] = useState(true);
-    const [error, setError] = useState(null);
-    
-    // Obtener la función agregarproductos del contexto
     const { agregarproductos } = useContext(CarritoContext);
- 
-    useEffect(() => { 
-        fetch('https://fakestoreapi.com/products') 
-            .then((respuesta) => respuesta.json()) 
-            .then((datos) => {
-                setProductos(datos);
-                setCargando(false);
-            }) 
-            .catch((error) => {
-                console.error('Error:', error);
-                setError("Hubo un error al cargar los productos");
-                setCargando(false);
-            });
-    }, []); 
+    const { productos, cargando, error } = useProductosContext();
 
-    if (cargando) return 'Cargando productos...';
-    if (error) return error;
+    if (cargando) return <div>Cargando productos...</div>;
+    if (error) return <div className="error">{error}</div>;
     
     return ( 
-        <>
         <ul id="listaProductos"> 
-             {productos.map(producto => (
+            {productos.map(producto => (
                 <li id="liProducto" key={producto.id}>                    
-                    <img src={producto.image} alt={producto.title} style={{ width: "100px", height: "100px" }} /> 
+                    <img 
+                        src={producto.image} 
+                        alt={producto.title} 
+                        style={{ width: "100px", height: "100px", objectFit: "contain" }} 
+                    /> 
                     <br />
-                    Producto: {producto.title}
+                    <strong>Producto:</strong> {producto.title}
                     <br />
-                    Precio: $ {producto.price}  
+                    <strong>Precio:</strong> ${producto.price?.toFixed(2) || producto.precio}  
                     <br />
-                    <button id="btproducto" onClick={() => agregarproductos(producto)}>
+                    <button 
+                        id="btproducto" 
+                        onClick={() => agregarproductos(producto)}
+                    >
                         Agregar
                     </button>
-                    <button id="btproducto">
-                        <Link to={`/Productos/${producto.id}`}>Detalles</Link>
-                    </button>
+                    <Link to={`/Productos/${producto.id}`}>
+                        <button id="btproducto">
+                            Detalles
+                        </button>
+                    </Link>
                 </li>
             ))}  
         </ul> 
-        </>
     ); 
 } 
 
