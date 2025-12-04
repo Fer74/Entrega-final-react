@@ -1,4 +1,4 @@
-import GestionProductos from "../components/GestionProducto";
+import GestionProductos from "../Components/GestionProducto";
 
 const Admin = () => {
   return (
