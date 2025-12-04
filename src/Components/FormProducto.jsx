@@ -15,23 +15,22 @@ const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
     evento.preventDefault();
     
     if (modo === "agregar") {
-      // Mapear campos del formulario a los de la API
       const productoParaAPI = {
         title: producto.nombre,
         price: parseFloat(producto.precio),
         description: producto.descripcion,
         image: producto.imagen,
-        category: 'electronics'
+        category: producto.categoria || 'electronics'
       };
       await agregarProducto(productoParaAPI);
     } else {
-      // Para editar, incluir el ID y mapear campos
       const productoParaAPI = {
         id: producto.id,
         title: producto.nombre,
         price: parseFloat(producto.precio),
         description: producto.descripcion,
-        image: producto.imagen
+        image: producto.imagen,
+        category: producto.categoria
       };
       await editarProducto(productoParaAPI);
     }
@@ -72,6 +71,21 @@ const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
               min="0"
               step="0.01"
             />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Categoría</Form.Label>
+            <Form.Select
+              name="categoria"
+              value={producto.categoria || "electronics"}
+              onChange={manejarChange}
+            >
+              <option value="electronics">Electrónica</option>
+              <option value="clothing">Ropa</option>
+              <option value="books">Libros</option>
+              <option value="toys">Juguetes</option>
+              <option value="home">Hogar</option>
+            </Form.Select>
           </Form.Group>
 
           <Form.Group className="mb-3">
